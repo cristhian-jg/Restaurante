@@ -36,12 +36,15 @@ function validar(e) {
         .then(data => {
             console.log('Success: ', data)
             mensajeError.innerHTML = data.error
+
+            localStorage.setItem("token", JSON.stringify(data.data.token))
+                
+            window.location.href = "areaPersonal.html"
         })
         .catch((error) => {
             console.error('Error', error)
         })
 
-        alert("Se creó el usuario correctamente.")
         return true
     } else {
         return false

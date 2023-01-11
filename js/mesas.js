@@ -1,5 +1,51 @@
 window.onload = function () {
 
+    var newMesa = document.getElementById("newMesa")
+
+    newMesa.addEventListener("click", function () {
+
+        var form = document.getElementById("formulario")
+
+        var numero = document.getElementById("numero")
+        var comensales = document.getElementById("comensales")
+        var descripcion = document.getElementById("descripcion")
+
+        numero.value = ""
+        comensales.value = ""
+        descripcion.value = ""
+
+        form.className = ""
+
+        form.addEventListener("submit", function (evt) {
+            fetch('https://restaurante.serverred.es/api/mesas', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Auth-Token': getToken()
+
+                    },
+                    body: JSON.stringify({
+                        numero: document.getElementById("numero").value,
+                        comensales: document.getElementById("comensales").value,
+                        descripcion: document.getElementById("descripcion").value
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success: ', data)
+                    if(data.error != null) {
+                        document.getElementById("missatgeError").innerHTML = data.error
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error: ', error)
+                })
+
+            evt.preventDefault()
+        });
+
+    })
+
     fetch('https://restaurante.serverred.es/api/mesas', {
             method: 'GET',
             headers: {
@@ -31,10 +77,74 @@ window.onload = function () {
                 btnBorrar.appendChild(document.createTextNode("Borrar"))
                 tdBorrar.appendChild(btnBorrar)
                 btnBorrar.className = "btn btn-primary btn-lg my-3"
+                btnBorrar.setAttribute("id", element._id)
+
+                // TODO Falta actualizar la tabla al borrar.
+
+                btnBorrar.addEventListener("click", function () {
+
+                    var confirmar = confirm("Estas seguro de que quieres eliminar esta mesa?")
+
+                    if (confirmar) {
+                        fetch('https://restaurante.serverred.es/api/mesas/' + this.id, {
+                                method: "DELETE",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    'Auth-Token': getToken()
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(json => {
+                                console.log(json)
+                            })
+                            .catch((error) => console.error('Error: ', error))
+                    }
+                })
 
                 btnModificar.appendChild(document.createTextNode("Modificar"))
                 tdModificar.appendChild(btnModificar)
                 btnModificar.className = "btn btn-primary btn-lg my-3"
+                btnModificar.setAttribute("id", element._id)
+                btnModificar.addEventListener("click", function () {
+
+                    var form = document.getElementById("formulario")
+
+                    var numero = document.getElementById("numero")
+                    var comensales = document.getElementById("comensales")
+                    var descripcion = document.getElementById("descripcion")
+
+                    var id = this.id;
+
+                    // Mostrar el formulario
+                    form.className = ""
+
+                    numero.value = element.numero
+                    comensales.value = element.comensales
+                    descripcion.value = element.descripcion
+
+                    form.addEventListener("submit", function (evt) {
+                        fetch('https://restaurante.serverred.es/api/mesas/' + id, {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    'Auth-Token': getToken()
+
+                                },
+                                body: JSON.stringify({
+                                    numero: document.getElementById("numero").value,
+                                    comensales: document.getElementById("comensales").value,
+                                    descripcion: document.getElementById("descripcion").value
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(json => {
+                                console.log(json)
+                            })
+                            .catch((error) => console.error('Error: ', error))
+
+                        evt.preventDefault()
+                    });
+                })
 
                 tr.appendChild(tdBorrar)
                 tr.appendChild(tdModificar)

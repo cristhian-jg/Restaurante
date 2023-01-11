@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    fetch('https://restaurante.serverred.es/api/platos', {
+    fetch('https://restaurante.serverred.es/api/comandas', {
             method: 'GET',
             headers: {
                 'Auth-Token': getToken()
@@ -20,13 +20,13 @@ window.onload = function () {
                 var btnModificar = document.createElement("button")
 
                 var tdNombre = document.createElement("td")
-                var tdOrden = document.createElement("td")
-                var tdPrecio = document.createElement("td")
+                var tdMesa = document.createElement("td")
+                var tdCom = document.createElement("td")
 
 
                 tdNombre.appendChild(document.createTextNode(element.nombre))
-                tdOrden.appendChild(document.createTextNode(element.orden))
-                tdPrecio.appendChild(document.createTextNode(element.precio))
+                tdMesa.appendChild(document.createTextNode(element.mesa))
+                tdCom.appendChild(document.createTextNode(element.com))
 
                 btnBorrar.appendChild(document.createTextNode("Borrar"))
                 tdBorrar.appendChild(btnBorrar)
@@ -39,8 +39,8 @@ window.onload = function () {
                 tr.appendChild(tdBorrar)
                 tr.appendChild(tdModificar)
                 tr.appendChild(tdNombre)
-                tr.appendChild(tdOrden)
-                tr.appendChild(tdPrecio)
+                tr.appendChild(tdMesa)
+                tr.appendChild(tdCom)
 
                 tbody.appendChild(tr)
             }))
