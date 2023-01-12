@@ -34,7 +34,6 @@ function validar(e) {
             .then(data => {
                 console.log('Success: ', data)
                 mensajeError.innerHTML = data.error
-
                 localStorage.setItem("token", JSON.stringify(data.data.token))
                 
                 window.location.href = "areaPersonal.html"

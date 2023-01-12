@@ -1,5 +1,11 @@
 window.onload = function () {
 
+    var newComanda = document.getElementById("newComanda")
+
+    newComanda.addEventListener("click", function () {
+        window.location.href = "altaComandas.html"
+    })
+
     fetch('https://restaurante.serverred.es/api/comandas', {
             method: 'GET',
             headers: {
@@ -16,31 +22,31 @@ window.onload = function () {
                 var tr = document.createElement("tr")
                 var tdBorrar = document.createElement("td")
                 var btnBorrar = document.createElement("button")
-                var tdModificar = document.createElement("td")
-                var btnModificar = document.createElement("button")
 
                 var tdNombre = document.createElement("td")
                 var tdMesa = document.createElement("td")
                 var tdCom = document.createElement("td")
+                var tdCamarero = document.createElement("td")
+                var tdHEntrada = document.createElement("td")
 
 
                 tdNombre.appendChild(document.createTextNode(element.nombre))
                 tdMesa.appendChild(document.createTextNode(element.mesa))
-                tdCom.appendChild(document.createTextNode(element.com))
+                tdCom.appendChild(document.createTextNode(element.comensales))
+                tdCamarero.appendChild(document.createTextNode(element.user))
+                tdHEntrada.appendChild(document.createTextNode(element.fechaEntrada))
 
                 btnBorrar.appendChild(document.createTextNode("Borrar"))
                 tdBorrar.appendChild(btnBorrar)
                 btnBorrar.className = "btn btn-primary btn-lg my-3"
 
-                btnModificar.appendChild(document.createTextNode("Modificar"))
-                tdModificar.appendChild(btnModificar)
-                btnModificar.className = "btn btn-primary btn-lg my-3"
 
                 tr.appendChild(tdBorrar)
-                tr.appendChild(tdModificar)
                 tr.appendChild(tdNombre)
                 tr.appendChild(tdMesa)
                 tr.appendChild(tdCom)
+                tr.appendChild(tdCamarero)
+                tr.appendChild(tdHEntrada)
 
                 tbody.appendChild(tr)
             }))

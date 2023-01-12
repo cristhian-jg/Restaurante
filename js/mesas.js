@@ -16,7 +16,11 @@ window.onload = function () {
 
         form.className = ""
 
-        form.addEventListener("submit", function (evt) {
+        document.getElementById("cancelar").addEventListener("click", function () {
+            document.getElementById("formulario").className = "visually-hidden"
+        });
+
+        document.getElementById("confirmar").addEventListener("click", function (evt) {
             fetch('https://restaurante.serverred.es/api/mesas', {
                     method: "POST",
                     headers: {
@@ -33,8 +37,12 @@ window.onload = function () {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success: ', data)
-                    if(data.error != null) {
+                    if (data.error != null) {
                         document.getElementById("missatgeError").innerHTML = data.error
+                        document.getElementById("missatgeError").className = "text-danger"
+                    } else {
+                        document.getElementById("missatgeError").innerHTML = "Se creó correctamente"
+                        document.getElementById("missatgeError").className = "text-success"
                     }
                 })
                 .catch((error) => {
