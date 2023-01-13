@@ -1,5 +1,29 @@
 window.onload = function () {
 
+    var mesasSeleccionadas = [];
+    var bebidasSeleccionadas = [];
+    var platosSeleccionados = [];
+
+
+    var confirmar = document.getElementById("confirmar")
+    confirmar.addEventListener("click", function () {
+        
+        var nombre = document.getElementById("nombre")
+        var comensales = document.getElementById("comensales")
+        var notas = document.getElementById("notas")
+
+        fetch('https://restaurante.serverred.es/api/comandas', {
+            method: 'POST',
+            headers: {
+                'Auth-Token': getToken()
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+    })
+
     fetch('https://restaurante.serverred.es/api/mesas', {
             method: 'GET',
             headers: {
@@ -9,7 +33,6 @@ window.onload = function () {
         .then(response => response.json())
         .then(data => {
             console.log(data.data.data.forEach(element => {
-                console.log(element)
 
                 var mesas = document.getElementById("mesas")
 
@@ -24,14 +47,25 @@ window.onload = function () {
                 input.addEventListener("click", function() {
                     if (this.className == "mt-2 btn btn-danger p-3" ) {
                             this.className = "mt-2 btn btn-primary p-3"
+                            mesasSeleccionadas.forEach(function(mesa, index, object) {
+                                if(mesa.id === element._id){
+                                  object.splice(index, 1);
+                                }
+                            });
+                            console.log(mesasSeleccionadas)
                     } else {
                         this.className = "mt-2 btn btn-danger p-3"
+                        mesasSeleccionadas.push({
+                            id: element._id,
+                            numero: element.numero
+                        })
+                        console.log(mesasSeleccionadas)
                     }
-        
                 })
 
                 div.appendChild(input)
                 mesas.appendChild(div)
+
             }))
         })
 
@@ -60,8 +94,19 @@ window.onload = function () {
                 input.addEventListener("click", function() {
                     if (this.className == "mt-2 btn btn-danger p-3" ) {
                             this.className = "mt-2 btn btn-info p-3"
+                            bebidasSeleccionadas.forEach(function(bebida, index, object) {
+                                if(bebida.id === element._id){
+                                  object.splice(index, 1);
+                                }
+                            });
+                            console.log(bebidasSeleccionadas)
                     } else {
                         this.className = "mt-2 btn btn-danger p-3"
+                        bebidasSeleccionadas.push({
+                            id: element._id,
+                            numero: element.nombre
+                        })
+                        console.log(bebidasSeleccionadas)
                     }
         
                 })
@@ -101,8 +146,19 @@ window.onload = function () {
                         input.addEventListener("click", function() {
                             if (this.className == "mt-2 btn btn-danger p-3" ) {
                                     this.className = "mt-2 btn btn-warning p-3"
+                                    platosSeleccionados.forEach(function(plato, index, object) {
+                                        if(plato.id === element._id){
+                                          object.splice(index, 1);
+                                        }
+                                    });
+                                    console.log(platosSeleccionados)
                             } else {
                                 this.className = "mt-2 btn btn-danger p-3"
+                                platosSeleccionados.push({
+                                    id: element._id,
+                                    numero: element.nombre
+                                })
+                                console.log(platosSeleccionados)
                             }
                 
                         })
@@ -126,8 +182,19 @@ window.onload = function () {
                     input.addEventListener("click", function() {
                         if (this.className == "mt-2 btn btn-danger p-3" ) {
                                 this.className = "mt-2 btn btn-warning p-3"
+                                platosSeleccionados.forEach(function(plato, index, object) {
+                                    if(plato.id === element._id){
+                                      object.splice(index, 1);
+                                    }
+                                });
+                                console.log(platosSeleccionados)
                         } else {
                             this.className = "mt-2 btn btn-danger p-3"
+                            platosSeleccionados.push({
+                                id: element._id,
+                                numero: element.nombre
+                            })
+                            console.log(platosSeleccionados)
                         }
             
                     })
@@ -149,8 +216,19 @@ window.onload = function () {
                         input.addEventListener("click", function() {
                             if (this.className == "mt-2 btn btn-danger p-3" ) {
                                     this.className = "mt-2 btn btn-warning p-3"
+                                    platosSeleccionados.forEach(function(plato, index, object) {
+                                        if(plato.id === element._id){
+                                          object.splice(index, 1);
+                                        }
+                                    });
+                                    console.log(platosSeleccionados)
                             } else {
                                 this.className = "mt-2 btn btn-danger p-3"
+                                platosSeleccionados.push({
+                                    id: element._id,
+                                    numero: element.nombre
+                                })
+                                console.log(platosSeleccionados)
                             }
                 
                         })
